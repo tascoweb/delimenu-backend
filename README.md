@@ -21,6 +21,22 @@
 - Suporte multitenancy com Laravel.
 - Autenticação com Laravel Sanctum.
 
+## Roadmap (Próximas Funcionalidades)
+
+- [ ] Autenticação com Laravel Sanctum.
+- [ ] Cadastro de Empresa.
+- [ ] Cadastro de Usuário.
+- [ ] Cadastro de Fornecedor.
+- [ ] Cadastro de Insumos.
+- [ ] Cadastro de Receitas.
+- [ ] Cadastro de Produto final.
+- [ ] Cálculo de Preço de Custo.
+- [ ] Implementar sistema de planos.
+- [ ] Documentar API.
+- [ ] Adicionar testes de integração.
+- [ ] Adicionar testes unitários.
+- [ ] Criar Dockerfile para ambiente de produção.
+
 ## Instalação e Configuração
 
 ### Pré-requisitos
