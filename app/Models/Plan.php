@@ -23,8 +23,4 @@ class Plan extends Model
     {
         return $this->hasMany(Company::class);
     }
-
-
-
-
 }

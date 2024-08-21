@@ -17,7 +17,7 @@ class TenantFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'domain' => $this->faker->domainName,
+            'domain' => $this->faker->unique()->domainName,
             'database' => Str::random(10),
         ];
     }

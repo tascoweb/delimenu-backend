@@ -12,6 +12,9 @@ class Company extends Model
 {
     use HasFactory;
 
+    /**
+     * @var \Illuminate\Support\HigherOrderCollectionProxy|mixed
+     */
     protected $fillable = [
         'tenant_id',
         'name',
