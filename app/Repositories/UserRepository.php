@@ -19,6 +19,7 @@ class UserRepository implements Contracts\UserRepositoryInterface
      */
     public function create(array $data, Tenant $tenant): User
     {
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],

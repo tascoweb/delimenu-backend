@@ -26,19 +26,23 @@ class TenantCreationService implements TenantCreationServiceInterface
         $this->userRepository = $userRepository;
     }
 
-    public function createTenantAndCompany(array $tenantData, array $companyData, array $userData)
+    public function createTenantAndCompany(array $tenantData, array $companyData, array $userData): array
     {
         return DB::transaction(function () use ($tenantData, $companyData, $userData) {
             $tenant = $this->tenantRepository->create($tenantData);
-            $this->companyRepository->create($companyData, $tenant);
+            $company = $this->companyRepository->create($companyData, $tenant);
 
             if (!isset($userData['role'])) {
                 $userData['role'] = 'admin';
             }
 
-            $this->userRepository->create($userData, $tenant);
+            $user = $this->userRepository->create($userData, $tenant);
 
-            return $tenant;
+            return [
+                'tenant' => $tenant,
+                'company' => $company,
+                'user' => $user,
+            ];
         });
     }
 

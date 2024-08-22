@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('logo')->nullable();
             $table->string('cnpj')->unique();
-            $table->string('url')->unique();
+            $table->string('url')->nullable();
 
             // Status do Tenant (Ativo, Inativo)
             $table->enum('active', ['Y', 'N'])->default('Y');

@@ -10,7 +10,9 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\FeatureRepository;
 use App\Repositories\TenantRepository;
 use App\Repositories\UserRepository;
+use App\Services\Auth\RegistrationService;
 use App\Services\CompanyService;
+use App\Services\Contracts\Auth\RegistrationServiceInterface;
 use App\Services\Contracts\CompanyServiceInterface;
 use App\Services\Contracts\FeatureServiceInterface;
 use App\Services\Contracts\TenantCreationServiceInterface;
@@ -36,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TenantServiceInterface::class, TenantService::class);
         $this->app->bind(TenantCreationServiceInterface::class, TenantCreationService::class);
         $this->app->bind(UserServiceInterface::class, UserService::class);
+        $this->app->bind(RegistrationServiceInterface::class, RegistrationService::class);
 
         // Register the repositories
         $this->app->bind(FeatureRepositoryInterface::class, FeatureRepository::class);

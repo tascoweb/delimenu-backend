@@ -99,12 +99,14 @@ class TenantCreationServiceTest extends TestCase
 
         DB::beginTransaction();
 
-        $createdTenant = $this->tenantCreationService->createTenantAndCompany($tenantData, $companyData, $userData);
+        $created = $this->tenantCreationService->createTenantAndCompany($tenantData, $companyData, $userData);
 
-        $this->assertEquals($tenant, $createdTenant);
-        $this->assertEquals($tenantData['name'], $createdTenant->name);
-        $this->assertEquals($tenantData['domain'], $createdTenant->domain);
-        $this->assertEquals($tenantData['database'], $createdTenant->database);
+        $this->assertEquals($tenant, $created['tenant']);
+        $this->assertEquals($company, $created['company']);
+        $this->assertEquals($user, $created['user']);
+        $this->assertEquals($tenantData['name'], $created['tenant']->name);
+        $this->assertEquals($tenantData['domain'], $created['tenant']->domain);
+        $this->assertEquals($tenantData['database'], $created['tenant']->database);
 
         DB::rollBack(); // Rollback para manter o banco de dados limpo após o teste
     }

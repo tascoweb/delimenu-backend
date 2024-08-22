@@ -13,6 +13,6 @@ interface TenantCreationServiceInterface
         CompanyRepositoryInterface $companyRepository,
         UserRepositoryInterface $userRepository
     );
-    public function createTenantAndCompany(array $tenantData, array $companyData, array $userData);
+    public function createTenantAndCompany(array $tenantData, array $companyData, array $userData): array;
 
 }

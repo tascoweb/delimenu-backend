@@ -31,11 +31,4 @@ class Tenant extends Model implements IsTenant
     {
         return $this->plans->first();
     }
-
-
-
-
-
-
-
 }
