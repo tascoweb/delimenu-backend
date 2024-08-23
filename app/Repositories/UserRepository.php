@@ -25,11 +25,19 @@ class UserRepository implements Contracts\UserRepositoryInterface
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'tenant_id' => $tenant->id,
-            'company_id' => $tenant->company->id,
         ]);
 
         $user->assignRole($data['role']);
 
         return $user;
+    }
+
+    /**
+     * @param string $email
+     * @return User|null
+     */
+    public function findByEmail(string $email): ?User
+    {
+        return User::where('email', $email)->first();
     }
 }

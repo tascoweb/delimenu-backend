@@ -38,7 +38,7 @@ class UserServiceTest extends TestCase
     public function test_create_user_successful()
     {
         $tenant = Tenant::factory()->create();
-        $company = Company::factory()->create(['tenant_id' => $tenant->id]);
+
 
         $data = [
             'name' => 'John Doe',
@@ -51,9 +51,9 @@ class UserServiceTest extends TestCase
             'name' => $data['name'],
             'email' => $data['email'],
             'tenant_id' => $tenant->id,
-            'company_id' => $company->id,
             'password' => Hash::make($data['password']),
         ]);
+
 
         $this->userRepositoryMock
             ->shouldReceive('create')
@@ -62,6 +62,7 @@ class UserServiceTest extends TestCase
             ->andReturn($user);
 
         $createdUser = $this->userService->createUser($data, $tenant);
+
 
         $this->assertEquals($user, $createdUser);
         $this->assertEquals($data['name'], $createdUser->name);

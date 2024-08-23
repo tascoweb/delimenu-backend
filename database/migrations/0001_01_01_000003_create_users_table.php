@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('tenant_id')->constrained('tenants');
-            $table->foreignId('company_id')->constrained('companies');
             $table->timestamps();
         });
 

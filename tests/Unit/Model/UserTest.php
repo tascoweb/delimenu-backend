@@ -54,10 +54,4 @@ class UserTest extends TestCase
         $this->assertInstanceOf(Tenant::class, $user->tenant);
     }
 
-    public function test_it_belongs_to_a_company()
-    {
-        $user = User::factory()->create();
-
-        $this->assertInstanceOf(Company::class, $user->company);
-    }
 }

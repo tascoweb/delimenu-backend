@@ -54,8 +54,11 @@ class DatabaseSeeder extends Seeder
             // Criar 3 usuários para cada empresa (1 admin e 2 usuários comuns)
             $users = User::factory()->count(3)->create([
                 'tenant_id' => $tenant->id,
-                'company_id' => $company->id,
             ]);
+
+            $users->each(function ($user) use ($company) {
+                $user->companies()->attach($company->id);
+            });
 
             $users->first()->assignRole($roleAdmin);
             $users->skip(1)->first()->assignRole($roleUser);

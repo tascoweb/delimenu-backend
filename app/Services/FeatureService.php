@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Company;
 use App\Models\Feature;
 use App\Models\Plan;
 use App\Models\User;
@@ -36,14 +37,14 @@ class FeatureService implements FeatureServiceInterface
     /**
      * Check if the feature is available in the user's company plan.
      *
-     * @param User $user
+     * @param Company $company
      * @param string $featureName
      * @return bool
      */
 
-    public function planHasFeature(User $user, string $featureName): bool
+    public function planHasFeature(Company $company, string $featureName, ): bool
     {
-        $plan = $user->company->plan;
+        $plan = $company->plan;
 
         if($plan){
             return $plan->features()->where('name', $featureName)->exists();
@@ -55,13 +56,18 @@ class FeatureService implements FeatureServiceInterface
      * Check if the user has access to a feature, either by feature flag or by the plan.
      *
      * @param User $user
+     * @param Company $company
      * @param string $featureName
      * @return bool
      */
 
-    public function hasFeature(User $user, string $featureName): bool
+    public function hasFeature(User $user, Company $company, string $featureName): bool
     {
-        return $this->userHasFeature($user, $featureName) || $this->planHasFeature($user, $featureName);
+        /* check if user belongs to company*/
+        if(!$company->users()->where('users.id', $user->id)->exists()){
+            return false;
+        }
+        return $this->userHasFeature($user, $featureName) || $this->planHasFeature($company, $featureName);
     }
 
     /**

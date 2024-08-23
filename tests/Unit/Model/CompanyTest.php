@@ -30,7 +30,8 @@ class CompanyTest extends TestCase
     public function test_company_has_many_users()
     {
         $company = Company::factory()->create();
-        User::factory()->count(3)->create(['company_id' => $company->id]);
+        $users = User::factory()->count(3)->create();
+        $company->users()->attach($users);
 
         $this->assertCount(3, $company->users);
     }

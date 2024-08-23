@@ -32,7 +32,6 @@ class UserFactoryTest extends TestCase
         $this->assertEquals('john.doe@example.com', $user->email);
         $this->assertNotNull($user->password);
         $this->assertNotNull($user->tenant_id);
-        $this->assertNotNull($user->company_id);
     }
 
     public function test_it_casts_email_verified_at_to_datetime()

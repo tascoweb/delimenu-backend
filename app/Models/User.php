@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Tenant;
 use Spatie\Permission\Traits\HasRoles;
-use App\Models\Feature;
 
 /**
  * @property int $tenant_id
@@ -31,7 +29,6 @@ class User extends Authenticatable
         'email',
         'password',
         'tenant_id',
-        'company_id',
     ];
 
     /**
@@ -64,9 +61,9 @@ class User extends Authenticatable
     }
 
     /* relation with companies */
-    public function company(): BelongsTo
+    public function companies(): BelongsToMany
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return $this->belongsToMany(Company::class, 'company_user');
     }
 
 

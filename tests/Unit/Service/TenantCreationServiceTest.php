@@ -75,9 +75,9 @@ class TenantCreationServiceTest extends TestCase
         $company = new Company(array_merge($companyData, ['tenant_id' => $tenant->id]));
         $user = new User(array_merge($userData, [
             'tenant_id' => $tenant->id,
-            'company_id' => $company->id,
             'password' => Hash::make($userData['password'])
         ]));
+        $user->companies()->attach($company->id);
 
         $this->tenantRepositoryMock
             ->shouldReceive('create')

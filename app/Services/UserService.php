@@ -24,4 +24,5 @@ class UserService implements Contracts\UserServiceInterface
     {
         return $this->userRepository->create($data, $tenant);
     }
+
 }

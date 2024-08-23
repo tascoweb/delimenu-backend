@@ -57,15 +57,14 @@ class FeatureServiceTest extends TestCase
         $plan->features()->attach($feature);
 
         $company = Company::factory()->create(['plan_id' => $plan->id]);
-        $user = User::factory()->create(['company_id' => $company->id]);
 
         $this->featureRepositoryMock
             ->shouldReceive('findByName')
             ->with($feature->name)
             ->andReturn($feature);
 
-        $this->assertTrue($this->featureService->planHasFeature($user, $feature->name));
-        $this->assertFalse($this->featureService->planHasFeature($user, 'Nonexistent Feature'));
+        $this->assertTrue($this->featureService->planHasFeature($company, $feature->name));
+        $this->assertFalse($this->featureService->planHasFeature($company, 'Nonexistent Feature'));
     }
 
 
@@ -73,11 +72,12 @@ class FeatureServiceTest extends TestCase
     {
         $feature = Feature::factory()->create();
         $plan = Plan::factory()->create();
-        $plan->features()->attach($feature);
-
         $company = Company::factory()->create(['plan_id' => $plan->id]);
-        $user = User::factory()->create(['company_id' => $company->id]);
+        $user = User::factory()->create();
+
+        $plan->features()->attach($feature);
         $user->features()->attach($feature);
+        $company->users()->attach($user);
 
         $this->featureRepositoryMock
             ->shouldReceive('findByName')
@@ -85,11 +85,11 @@ class FeatureServiceTest extends TestCase
             ->andReturn($feature);
 
         // User has feature directly
-        $this->assertTrue($this->featureService->hasFeature($user, $feature->name));
+        $this->assertTrue($this->featureService->hasFeature($user, $company, $feature->name));
 
         // User has feature through the plan
         $user->features()->detach($feature);
-        $this->assertTrue($this->featureService->hasFeature($user, $feature->name));
+        $this->assertTrue($this->featureService->hasFeature($user, $company, $feature->name));
 
         // User does not have feature
         $this->featureRepositoryMock
@@ -97,7 +97,7 @@ class FeatureServiceTest extends TestCase
             ->with('Nonexistent Feature')
             ->andReturn(null);
 
-        $this->assertFalse($this->featureService->hasFeature($user, 'Nonexistent Feature'));
+        $this->assertFalse($this->featureService->hasFeature($user, $company, 'Nonexistent Feature'));
     }
 
     public function test_it_can_create_a_feature()

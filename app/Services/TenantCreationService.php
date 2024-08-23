@@ -37,6 +37,7 @@ class TenantCreationService implements TenantCreationServiceInterface
             }
 
             $user = $this->userRepository->create($userData, $tenant);
+            $user->companies()->attach($company->id);
 
             return [
                 'tenant' => $tenant,
